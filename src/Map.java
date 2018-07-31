@@ -1,11 +1,7 @@
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.stream.Stream;
 
 public class Map {
 
@@ -14,9 +10,7 @@ public class Map {
     private Robot robot;
 
 
-    public static void readMap(String userFile){
-
-
+    public static String[][] readMap(String userFile){
         try {
 
             int colCtr = 0;
@@ -34,6 +28,9 @@ public class Map {
                 currentLn = reader.readLine();
             }
 
+            System.out.println("Ancho: " + colCtr);
+            System.out.println("Alto: " + rowCtr);
+
 
             String [][] map = new String [rowCtr][colCtr];
 
@@ -44,21 +41,35 @@ public class Map {
                 y++;
             }
 
-            for (int j = 0; j < rowCtr; j++){
-                for (int i = 0; i < colCtr; i++){
-                    System.out.print(map[j][i]);
-                }
-                System.out.println("");
-            }
+            return map;
 
         } catch (IOException exception) {
 
             System.out.println( "ERROR: No se ha encontrado el archivo." );
+            return null;
 
         }
 
     }
 
+    public  static void printMap(String[][] mapa){
+
+        for(int j = 1; j < mapa.length; j++){
+            for(int i = 0; i < mapa[j].length; i++){
+                System.out.print(mapa[j][i]);
+            }
+            System.out.println("");
+        }
+
+    }
+
+    public void setWalls(String[][] map){
+        for(int j = 0; j < map.length; j++){
+            for(int i = 0; i < map[j].length; i++){
+
+            }
+        }
+    }
 
 
 }

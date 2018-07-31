@@ -6,13 +6,14 @@ public class Laboratorio3 {
 
         Scanner input = new Scanner(System.in);
         Map Mapa = new Map();
+        String [][] map;
 
         System.out.print("Ingrese direccion del Mapa: ");
         String userFile = input.nextLine();
 
-        Mapa.readMap(userFile);
+        map = Mapa.readMap(userFile);
+        Mapa.printMap(map);
 
-        
 
     }
 
