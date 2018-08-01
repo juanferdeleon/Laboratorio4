@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class Map {
 
-    private ArrayList<Wall> Walls;
-    private ArrayList<PileOfCoins> pileOfCoins;
+    private ArrayList<Wall> Walls = new ArrayList<>();
+    private ArrayList<PileOfCoins> pilesOfCoins = new ArrayList<>();
     private Robot robot;
 
 
@@ -52,6 +52,72 @@ public class Map {
 
     }
 
+    public ArrayList<String> giveInstructions(String userFile){
+        return this.robot.readInstructions(userFile);
+    }
+
+    public String[][] executeInstructions(String [][] map, ArrayList<String> instructions){
+        for (String instruction : instructions) {
+            if (instruction.contains("move")){
+
+                int row = robot.getRow();
+                int column = robot.getColumn();
+
+                robot.move();
+                if (isWall(robot.getRow(), robot.getColumn())){
+                    robot.dontMove();
+                }else{
+                    map[row][column] = " ";
+                    map[robot.getRow()][robot.getColumn()] = robot.toString();
+                }
+            }
+            if (instruction.contains("rotate")){
+                robot.rotate();
+                map[robot.getRow()][robot.getColumn()] = robot.toString();
+            }
+            if (instruction.contains("pick")){
+                if (isPileOfCoins(robot.getRow(), robot.getColumn())){
+                    for (PileOfCoins pile: pilesOfCoins) {
+                        if ((robot.getRow() == pile.getRow()) && (robot.getColumn() == pile.getColumn())){
+                            robot.pick(pile.getAmountOfCoins().get(0));
+                            pile.removeCoin();
+                        }
+                    }
+                }
+            }
+        }
+        return map;
+    }
+
+    public boolean isPileOfCoins(int row, int column){
+
+        boolean isPileOfCoins = false;
+
+        for (PileOfCoins pile: pilesOfCoins) {
+            if ((row == pile.getRow()) && (column == pile.getColumn()) ){
+                isPileOfCoins = true;
+                return isPileOfCoins;
+            }
+        }
+
+        return isPileOfCoins;
+    }
+
+    public boolean isWall(int row, int column){
+
+        boolean isWall = false;
+
+        for (Wall wall: Walls) {
+            if ((row == wall.getRow()) && (column == wall.getColumn())){
+                isWall = true;
+                return isWall;
+            }
+        }
+        return isWall;
+
+    }
+
+
     public  static void printMap(String[][] mapa){
 
         for(int j = 1; j < mapa.length; j++){
@@ -63,12 +129,46 @@ public class Map {
 
     }
 
-    public void setWalls(String[][] map){
-        for(int j = 0; j < map.length; j++){
+    public void setObjects(String[][] map){
+
+        for(int j = 1; j < map.length; j++){
             for(int i = 0; i < map[j].length; i++){
+
+                if(map[j][i].matches("(\\d+)")){
+
+                    int amountOfCoins = Integer.parseInt(map[j][i]);
+                    PileOfCoins pileOfCoins = new PileOfCoins(j, i);
+                    int ctr = 0;
+
+                    while (ctr < amountOfCoins){
+                        Coin coin = new Coin(j, i);
+                        pileOfCoins.setAmountOfCoins(coin);
+                        ctr++;
+                    }
+
+                    this.pilesOfCoins.add(pileOfCoins);
+
+                }else{
+
+                    if (map[j][i].equals("*")){
+                        Wall wall = new Wall(j, i);
+                        this.Walls.add(wall);
+                    }
+                    if (map[j][i].equals("<") || map[j][i].equals(">") || map[j][i].equals("^") || map[j][i].equals("v")){
+                        Robot robot = new Robot(j, i);
+                        robot.setDirection(map[j][i]);
+                        this.robot = robot;
+                    }
+
+                }
 
             }
         }
+
+        //System.out.println(pilesOfCoins.size());
+        //System.out.println(Walls.size());
+        //System.out.println(robot.toString());
+
     }
 
 

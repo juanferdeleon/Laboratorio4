@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Laboratorio3 {
@@ -6,12 +7,19 @@ public class Laboratorio3 {
 
         Scanner input = new Scanner(System.in);
         Map Mapa = new Map();
-        String [][] map;
 
         System.out.print("Ingrese direccion del Mapa: ");
         String userFile = input.nextLine();
 
-        map = Mapa.readMap(userFile);
+        String [][] map = Mapa.readMap(userFile);
+        Mapa.printMap(map);
+        Mapa.setObjects(map);
+
+        System.out.print("Ingrese direccion de las instrucciones: ");
+        userFile = input.nextLine();
+        ArrayList<String> instructions = Mapa.giveInstructions(userFile);
+        Mapa.executeInstructions(map, instructions);
+
         Mapa.printMap(map);
 
 

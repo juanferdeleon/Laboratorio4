@@ -8,12 +8,20 @@ public class Wall {
         this.setColumn(column);
     }
 
-    private void setRow(int row){
+    public void setRow(int row){
         this.row = row;
     }
 
-    private void setColumn(int column){
+    public void setColumn(int column){
         this.column = column;
+    }
+
+    public int getRow(){
+        return row;
+    }
+
+    public int getColumn(){
+        return column;
     }
 
 }
