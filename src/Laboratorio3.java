@@ -18,7 +18,13 @@ public class Laboratorio3 {
         System.out.print("Ingrese direccion de las instrucciones: ");
         userFile = input.nextLine();
         ArrayList<String> instructions = Mapa.giveInstructions(userFile);
-        Mapa.executeInstructions(map, instructions);
+        map = Mapa.executeInstructions(map, instructions);
+
+        if (Mapa.checkWinner(map)){
+            System.out.println("Usted ha recogido todos los beepers!");
+        }else{
+            System.out.println("Ha dejado beepers en el mapa!");
+        }
 
     }
 

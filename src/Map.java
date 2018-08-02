@@ -121,7 +121,6 @@ public class Map {
 
     }
 
-
     public void printMap(String[][] mapa){
 
         for(int j = 1; j < mapa.length; j++){
@@ -168,11 +167,27 @@ public class Map {
 
             }
         }
+    }
 
-        //System.out.println(pilesOfCoins.size());
-        //System.out.println(Walls.size());
-        //System.out.println(robot.toString());
+    public boolean checkWinner(String [][] map){
 
+        boolean isWinner = false;
+        int beeperCtr = 0;
+
+        for(int j = 1; j < map.length; j++) {
+            for (int i = 0; i < map[j].length; i++) {
+                if(map[j][i].matches("(\\d+)")) {
+                    beeperCtr += Integer.parseInt(map[j][i]);
+                }
+            }
+        }
+
+        if (beeperCtr == 0){
+            isWinner = true;
+            return isWinner;
+        }
+
+        return isWinner;
     }
 
 
