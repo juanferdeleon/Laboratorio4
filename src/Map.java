@@ -28,10 +28,6 @@ public class Map {
                 currentLn = reader.readLine();
             }
 
-            System.out.println("Ancho: " + colCtr);
-            System.out.println("Alto: " + rowCtr);
-
-
             String [][] map = new String [rowCtr][colCtr];
 
             int y = 0;
@@ -70,6 +66,7 @@ public class Map {
                     map[row][column] = " ";
                     map[robot.getRow()][robot.getColumn()] = robot.toString();
                 }
+
             }
             if (instruction.contains("rotate")){
                 robot.rotate();
@@ -85,6 +82,13 @@ public class Map {
                     }
                 }
             }
+            for (PileOfCoins pile: pilesOfCoins) {
+                if ((robot.getRow() != pile.getRow()) || (robot.getColumn() != pile.getColumn())){
+                    String setPile = Integer.toString(pile.getAmountOfCoins().size());
+                    map[pile.getRow()][pile.getColumn()] = setPile;
+                }
+            }
+            printMap(map);
         }
         return map;
     }
@@ -118,7 +122,7 @@ public class Map {
     }
 
 
-    public  static void printMap(String[][] mapa){
+    public void printMap(String[][] mapa){
 
         for(int j = 1; j < mapa.length; j++){
             for(int i = 0; i < mapa[j].length; i++){

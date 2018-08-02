@@ -20,9 +20,6 @@ public class Laboratorio3 {
         ArrayList<String> instructions = Mapa.giveInstructions(userFile);
         Mapa.executeInstructions(map, instructions);
 
-        Mapa.printMap(map);
-
-
     }
 
 }
